@@ -1,0 +1,40 @@
+[
+  {
+    "title": "Golden Gate Bridge", 
+    "lat": 37.818837, 
+    "lng": -122.478411,
+    "type": "point_of_interest"
+  },
+  {
+    "title": "Fisherman's Wharf",
+    "lat": 37.808, 
+    "lng": -122.417743,
+    "type": "neighborhood,political"
+  },
+  {
+    "title": "Union Square", 
+    "lat": 37.78798, 
+    "lng": -122.407517,
+    "type": "establishment, park, point_of_interest"
+  },
+  {
+    "title": "California Academy of Sciences", 
+    "lat": 37.769865, 
+    "lng": -122.466095,
+    "type": "aquarium, establishment, museum, point_of_interest"
+  },
+  {
+    "title": "Lombard Street",
+    "lat": 37.800985, 
+    "lng": -122.426763,
+    "type": "route"
+  },
+  {
+    "title": "AT&T Park, ",
+    "lat": 37.778595, 
+    "lng": -122.38927,
+    "type": "establishment, point_of_interest, stadium"
+  }
+]
+
+
