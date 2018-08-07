@@ -3,3 +3,41 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.search{
+  border-radius: 5px;
+  position: absolute;
+  max-height: 50%;
+  overflow: auto;
+  left: .5%;
+  top: 6%;
+  z-index: 2;
+  background-color: #C5CAE9;
+  opacity: .9;
+  text-align: left;
+}
+
+.search input{
+  width: 94%;
+  padding: 5px;
+  margin-bottom: 5%;
+  font-size: 22px;
+  border: 2px solid #303F9F;
+}
+
+ul{
+  -webkit-margin-before:0em;
+  -webkit-margin-after:0em;
+  -webkit-padding-start: 10px;
+  -webkit-padding-end: 20px;
+}
+
+.location {
+  padding: 2px 0px;
+  margin-bottom: 10px;
+}
+
+.location:hover {
+  background-color: #C5CAE9;
+  color: #fff;
+}
