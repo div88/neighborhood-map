@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 
+
 class Map extends Component {
+    
     state = {
       isOpen: false,
       infoId: '',
@@ -18,6 +20,37 @@ class Map extends Component {
           lng: item.lng
         }
       });
+      //this.marker.animation = window.google.maps.Animation.DROP;
+    }
+
+    componentDidMount() {
+      const fourClientId = "A3SNPBGBLRFOVUYR5KX4HX0MQ4CZQ2GSGCDXA5NDLNN4HQYD";
+      const fourSecret= "GBFA5JXVHMIMT3FUH4OSPCCEEXQA1TZBGBPOT2CIQLQA4V5Q";
+      const id = "49d01698f964a520fd5a1fe3";
+      fetch(`https://api.foursquare.com/v2/venues/search?ll=37.818837,-122.478411&client_id=${fourClientId}&client_secret=${fourSecret}&v=20130815&near&query=${this.props.locations[0]}`)
+        .then((res) => res.text())
+        .then((text) => {
+          let formattedResponse = JSON.parse(text).response.venues[0];
+          this.setState({
+            address: formattedResponse.location.crossStreet,
+            formattedAddress: formattedResponse.location.formattedAddress[0] + ', ' + formattedResponse.location.formattedAddress[1],
+            coordinates: [formattedResponse.location.lat, formattedResponse.location.lng]
+          })
+          return formattedResponse.id
+      })
+      .then((id) => {
+        fetch(`https://api.foursquare.com/v2/venues/${id}/photos?client_id=${fourClientId}&client_secret=${fourSecret}&v=20130815`)
+        .then((res) => res.text())
+        .then((text) => {
+          let formattedNewResponse = JSON.parse(text)
+          let imageInfo = formattedNewResponse.response.photos.items[0]
+          this.setState({
+            imageSrc: imageInfo.prefix + 'original' + imageInfo.suffix
+          })
+        })
+        return id
+      })
+  
     }
 
     handleToggleClose = (id) => {
@@ -48,6 +81,7 @@ class Map extends Component {
   
   render() {
    let locations = this.state.locations
+  
     const MyMapComponent = withGoogleMap(props => (
       <GoogleMap
           defaultCenter = {{ lat: 37.77493, lng: -122.419416 }}
@@ -57,6 +91,7 @@ class Map extends Component {
             <Marker
               key={marker.title}
               position={{ lat: marker.lat, lng: marker.lng }}
+              animation= {window.google.maps.Animation.BOUNCE}
               
             onClick={() => this.handleToggleOpen(marker)}>
             {(this.state.position && this.state.infoId === marker.title) &&
