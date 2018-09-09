@@ -18,10 +18,10 @@ body {
 }
 
 .search input{
-  width: 94%;
+  width: 98%;
   padding: 5px;
   margin-bottom: 5%;
-  font-size: 22px;
+  font-size: 15px;
   border: 2px solid #303F9F;
 }
 

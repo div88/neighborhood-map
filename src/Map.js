@@ -9,12 +9,12 @@ class Map extends Component {
       infoId: '',
       allLocations: this.props.locations,
       locations: this.props.locations,
-      locationInfo: 'Loading ...',
-      photo: 'Loading ...',
-      name: 'Loading ...',
-      categories: 'Loading ...',
-      url:'Loading ...',
-      tips:'Loading ...'
+      locationInfo: 'Loading...',
+      photo: 'Loading...',
+      name: 'Loading...',
+      categories: 'Loading...',
+      url:'Loading...',
+      tips:'Loading...'
     }
   
     handleToggleOpen = (item) => {
@@ -29,8 +29,6 @@ class Map extends Component {
       //this.marker.animation = window.google.maps.Animation.DROP;
       this.getFoursquareData(item);
     }
-
-
 
     getFoursquareData = (venueItem) => {
      return locationFourSquareAPI.getlocationInfo(venueItem).then(response => {
@@ -66,6 +64,14 @@ class Map extends Component {
       this.setState({
         isOpen: false,
         infoId: id,
+        allLocations: this.props.locations,
+        locations: this.props.locations,
+        locationInfo: '',
+        photo: '',
+        name: '',
+        categories: '',
+        url:'',
+        tips:''
       
       });
     }
@@ -100,18 +106,17 @@ class Map extends Component {
             <Marker
               key={marker.title}
               position={{ lat: marker.lat, lng: marker.lng }}
-              animation= {window.google.maps.Animation.DROP}
-              // {this.state.activeMarker.title === markerInfo.title ? this.props.google.maps.Animation.BOUNCE : null  }
+              animation= {this.state.infoId === marker.title ? window.google.maps.Animation.BOUNCE : null  }
               
             onClick={() => this.handleToggleOpen(marker)}>
             {(this.state.position && this.state.infoId === marker.title) &&
               
               <InfoWindow className="infoWindow" position={this.state.position}>
                 <div>
-                  <img  tabIndex="0"   src={this.state.photo}   alt={marker.title}/>
-                  <p className="locationTitle"><strong>Name: </strong>{this.state.name}</p>
-                  <p><strong>Categories: </strong>{this.state.categories}</p>
-                  <p><strong>URL: </strong>{this.state.url}</p>
+                  <img tabIndex="0" src={this.state.photo}   alt={marker.title}/>
+                  <p tabIndex="0" className="locationTitle"><strong>Name: </strong>{this.state.name}</p>
+                  <p tabIndex="0"><strong>Categories: </strong>{this.state.categories}</p>
+                  <p tabIndex="0"><strong>URL: </strong>{this.state.url}</p>
                   {/* <p>{this.state.tips}</p> */}
                 </div>
               </InfoWindow>
@@ -122,9 +127,9 @@ class Map extends Component {
     ));
     return(
       <div>
-        <div className="search">
-          <div className="search-books-results" style={{  }}>
-          <input type="text" value={this.state.query} onChange={(event) => this.updateQuery(event.target.value)}/>
+        <div className="search" tabIndex='2'>
+          <div style={{  }}>
+          <input type="text" placeholder="Search by location name" value={this.state.query} onChange={(event) => this.updateQuery(event.target.value)}/>
               <ul>
                 {locations.map((location) => (
                   <li style={{ listStyle: `none` }} key={location.title} className="location" onClick={() => this.handleToggleOpen(location)}>
