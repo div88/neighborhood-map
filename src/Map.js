@@ -114,9 +114,15 @@ class Map extends Component {
               <InfoWindow className="infoWindow" position={this.state.position}>
                 <div>
                   <img tabIndex="0" src={this.state.photo}   alt={marker.title}/>
-                  <p tabIndex="0" className="locationTitle"><strong>Name: </strong>{this.state.name}</p>
-                  <p tabIndex="0"><strong>Categories: </strong>{this.state.categories}</p>
-                  <p tabIndex="0"><strong>URL: </strong>{this.state.url}</p>
+                  <p tabIndex="0" className="locationTitle">
+                    <label><strong>Name: </strong></label>{this.state.name}
+                  </p>
+                  <p tabIndex="0">
+                    <label><strong>Categories: </strong></label>{this.state.categories}
+                  </p>
+                  <p tabIndex="0">
+                    <label><strong>URL: </strong></label>{this.state.url}
+                  </p>
                   {/* <p>{this.state.tips}</p> */}
                 </div>
               </InfoWindow>
@@ -127,8 +133,7 @@ class Map extends Component {
     ));
     return(
       <div>
-        <div className="search" tabIndex='2'>
-          <div style={{  }}>
+        <div className="search" tabIndex='2' role="search">
           <input type="text" placeholder="Search by location name" value={this.state.query} onChange={(event) => this.updateQuery(event.target.value)}/>
               <ul>
                 {locations.map((location) => (
@@ -144,9 +149,8 @@ class Map extends Component {
               {this.state.isError && (
                   <p className="error-label">No results available for this search. Try a different search term.</p>
               )}
-          </div>
         </div>
-        <MyMapComponent 
+        <MyMapComponent role="main"
           containerElement={ <div style={{ height: `100vh`, width: '100%' }} /> }
           mapElement={ <div style={{ height: `100%` }} /> }
         />             
