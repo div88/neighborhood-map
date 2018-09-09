@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
-
+import * as locationFourSquareAPI from './LocationInfoAPI.js'
 
 class Map extends Component {
     
@@ -8,7 +8,13 @@ class Map extends Component {
       isOpen: false,
       infoId: '',
       allLocations: this.props.locations,
-      locations: this.props.locations
+      locations: this.props.locations,
+      locationInfo: 'Loading ...',
+      photo: 'Loading ...',
+      name: 'Loading ...',
+      categories: 'Loading ...',
+      url:'Loading ...',
+      tips:'Loading ...'
     }
   
     handleToggleOpen = (item) => {
@@ -21,37 +27,40 @@ class Map extends Component {
         }
       });
       //this.marker.animation = window.google.maps.Animation.DROP;
+      this.getFoursquareData(item);
     }
 
-    componentDidMount() {
-      const fourClientId = "A3SNPBGBLRFOVUYR5KX4HX0MQ4CZQ2GSGCDXA5NDLNN4HQYD";
-      const fourSecret= "GBFA5JXVHMIMT3FUH4OSPCCEEXQA1TZBGBPOT2CIQLQA4V5Q";
-      const id = "49d01698f964a520fd5a1fe3";
-      fetch(`https://api.foursquare.com/v2/venues/search?ll=37.818837,-122.478411&client_id=${fourClientId}&client_secret=${fourSecret}&v=20130815&near&query=${this.props.locations[0]}`)
-        .then((res) => res.text())
-        .then((text) => {
-          let formattedResponse = JSON.parse(text).response.venues[0];
+
+
+    getFoursquareData = (venueItem) => {
+     return locationFourSquareAPI.getlocationInfo(venueItem).then(response => {
+       if(response === 'error' || response.meta.code !== 200)
+         this.setState({
+           likes: 'Error loading content',
+           photo: 'error'
+         });
+       else{
+         if(response.response.venue)
           this.setState({
-            address: formattedResponse.location.crossStreet,
-            formattedAddress: formattedResponse.location.formattedAddress[0] + ', ' + formattedResponse.location.formattedAddress[1],
-            coordinates: [formattedResponse.location.lat, formattedResponse.location.lng]
-          })
-          return formattedResponse.id
-      })
-      .then((id) => {
-        fetch(`https://api.foursquare.com/v2/venues/${id}/photos?client_id=${fourClientId}&client_secret=${fourSecret}&v=20130815`)
-        .then((res) => res.text())
-        .then((text) => {
-          let formattedNewResponse = JSON.parse(text)
-          let imageInfo = formattedNewResponse.response.photos.items[0]
-          this.setState({
-            imageSrc: imageInfo.prefix + 'original' + imageInfo.suffix
-          })
-        })
-        return id
-      })
-  
+            photo: response.response.venue.bestPhoto.prefix+'200x200'+response.response.venue.bestPhoto.suffix,
+            name: response.response.venue.name,
+            categories: response.response.venue.categories[0].name,
+            url:response.response.venue.url,
+            tips:response.response.venue.tips.groups[0].items[0].text
+          });
+         else
+            this.setState({
+            photo:'error',
+            name: 'error',
+            categories: 'error',
+            url:'error',
+            tips:'error'
+          });
+           
+       }
+     })
     }
+
 
     handleToggleClose = (id) => {
       this.setState({
@@ -61,7 +70,7 @@ class Map extends Component {
       });
     }
 
-  updateQuery = (query) => {
+  updateQuery = (query) => {  
     var newLocations;
     if(query.length > 0){
       
@@ -91,12 +100,20 @@ class Map extends Component {
             <Marker
               key={marker.title}
               position={{ lat: marker.lat, lng: marker.lng }}
-              animation= {window.google.maps.Animation.BOUNCE}
+              animation= {window.google.maps.Animation.DROP}
+              // {this.state.activeMarker.title === markerInfo.title ? this.props.google.maps.Animation.BOUNCE : null  }
               
             onClick={() => this.handleToggleOpen(marker)}>
             {(this.state.position && this.state.infoId === marker.title) &&
-              <InfoWindow  position={this.state.position}>
-                <span>{marker.title}</span>
+              
+              <InfoWindow className="infoWindow" position={this.state.position}>
+                <div>
+                  <img  tabIndex="0"   src={this.state.photo}   alt={marker.title}/>
+                  <p className="locationTitle"><strong>Name: </strong>{this.state.name}</p>
+                  <p><strong>Categories: </strong>{this.state.categories}</p>
+                  <p><strong>URL: </strong>{this.state.url}</p>
+                  {/* <p>{this.state.tips}</p> */}
+                </div>
               </InfoWindow>
               }
             </Marker>
@@ -107,7 +124,7 @@ class Map extends Component {
       <div>
         <div className="search">
           <div className="search-books-results" style={{  }}>
-          <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={(event) => this.updateQuery(event.target.value)}/>
+          <input type="text" value={this.state.query} onChange={(event) => this.updateQuery(event.target.value)}/>
               <ul>
                 {locations.map((location) => (
                   <li style={{ listStyle: `none` }} key={location.title} className="location" onClick={() => this.handleToggleOpen(location)}>

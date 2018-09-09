@@ -3,38 +3,50 @@
     "title": "Golden Gate Bridge", 
     "lat": 37.818837, 
     "lng": -122.478411,
-    "type": "point_of_interest"
+    "type": "point_of_interest",
+    "venueID": "49d01698f964a520fd5a1fe3"
   },
   {
     "title": "Fisherman's Wharf",
     "lat": 37.808, 
     "lng": -122.417743,
-    "type": "neighborhood,political"
+    "type": "neighborhood,political",
+    "venueID": "4c279d763703d13a5a4aa736"
   },
   {
     "title": "Union Square", 
     "lat": 37.78798, 
     "lng": -122.407517,
-    "type": "establishment, park, point_of_interest"
+    "type": "establishment, park, point_of_interest",
+    "venueID": "40bbc700f964a520b1001fe3"
   },
   {
-    "title": "California Academy of Sciences", 
-    "lat": 37.769865, 
-    "lng": -122.466095,
-    "type": "aquarium, establishment, museum, point_of_interest"
+    "title": "Ghiradelli Square", 
+    "lat": 37.806164, 
+    "lng": -122.423004,
+    "type": "point_of_interest",
+    "venueID": "4b819f25f964a5204ab330e3"
+  },
+  {
+    "title": "Lands End", 
+    "lat": 37.784124, 
+    "lng": -122.502998,
+    "type": "point_of_interest",
+    "venueID": "49bacd63f964a520b0531fe3"
   },
   {
     "title": "Lombard Street",
     "lat": 37.800985, 
     "lng": -122.426763,
-    "type": "route"
+    "type": "route",
+    "venueID": "49f62829f964a520136c1fe3"
   },
   {
-    "title": "AT&T Park",
+    "title": "AT&T Park, ",
     "lat": 37.778595, 
     "lng": -122.38927,
-    "type": "establishment, point_of_interest, stadium"
+    "type": "establishment, point_of_interest, stadium",
+    "venueID": "4bd2177d046076b055357371"
   }
 ]
-
 

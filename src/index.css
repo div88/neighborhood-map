@@ -32,6 +32,14 @@ ul{
   -webkit-padding-end: 20px;
 }
 
+.infoWindow {
+  max-width: 250px;
+}
+
+.infoWindow label, .infoWindow span {
+  font-weight: bold;
+}
+
 .location {
   padding: 2px 0px;
   margin-bottom: 10px;
@@ -40,4 +48,11 @@ ul{
 .location:hover {
   background-color: #C5CAE9;
   color: #fff;
+}
+
+.gm-style .gm-style-iw {
+  top: 9px;
+  position: absolute;
+  left: 15px;
+  width: 350px;
 }
